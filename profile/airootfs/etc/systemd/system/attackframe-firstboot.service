@@ -1,0 +1,13 @@
+[Unit]
+Description=AttackFrame OS first-boot setup (theme, launchers, live operator)
+After=local-fs.target
+Before=display-manager.service systemd-user-sessions.service NetworkManager.service
+ConditionPathExists=!/var/lib/attackframe/firstboot.done
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/attackframe-firstboot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

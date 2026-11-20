@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# kali <cmd...>  — run a command from the Kali layer. No args: open a Kali shell.
+if (($#)); then exec attackframe-kali run "$@"; else exec attackframe-kali enter; fi

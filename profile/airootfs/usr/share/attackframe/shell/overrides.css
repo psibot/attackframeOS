@@ -1,0 +1,101 @@
+/* ═══ AttackFrame OS — GNOME Shell overrides ═══════════════════════════════
+   Appended to the stock dark shell stylesheet at boot by attackframe-firstboot,
+   so it keeps working across GNOME releases. Palette:
+   void #05070d  panel #0b0f1a  cyan #00f0ff  magenta #ff2bd6  yellow #f5ff3b  text #c8f7ff */
+
+stage { font-family: "JetBrainsMono Nerd Font", monospace; }
+
+/* top bar: black strip with a neon scanline */
+#panel {
+  background-color: #05070d;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.55);
+  box-shadow: 0 2px 10px rgba(0, 240, 255, 0.25);
+  font-weight: bold;
+  height: 30px;
+}
+#panel .panel-button { color: #00f0ff; border-radius: 0; }
+#panel .panel-button:hover, #panel .panel-button:active, #panel .panel-button:checked {
+  background-color: rgba(255, 43, 214, 0.18);
+  box-shadow: inset 0 -2px 0 #ff2bd6;
+  color: #ffffff;
+}
+#panel .panel-button .clock { color: #f5ff3b; }
+#panel.unlock-screen, #panel.login-screen, #panel:overview { background-color: transparent; border-bottom-color: transparent; box-shadow: none; }
+
+/* workspace dots → neon segments */
+#panel .workspace-dot { background-color: rgba(0, 240, 255, 0.45); }
+
+/* menus, quick settings, calendar */
+.popup-menu-content, .quick-settings, .calendar, .message-list, .datemenu-popover {
+  background-color: rgba(8, 11, 20, 0.97);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 2px;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.18);
+  color: #c8f7ff;
+}
+.popup-menu-item { border-radius: 0; }
+.popup-menu-item:hover, .popup-menu-item:focus, .popup-menu-item.selected {
+  background-color: rgba(0, 240, 255, 0.12);
+  color: #00f0ff;
+}
+.popup-separator-menu-item .popup-separator-menu-item-separator { background-color: rgba(255, 43, 214, 0.4); }
+
+.quick-toggle, .quick-menu-toggle .quick-toggle-arrow, .quick-slider .slider { border-radius: 2px; }
+.quick-toggle:checked, .quick-menu-toggle .quick-toggle:checked, .quick-menu-toggle .quick-toggle-arrow:checked {
+  background-color: #ff2bd6;
+  color: #05070d;
+}
+.slider { -barlevel-active-background-color: #00f0ff; -barlevel-background-color: rgba(0, 240, 255, 0.15); }
+.toggle-switch:checked { background-color: #00f0ff; }
+
+.calendar-day.calendar-today, .calendar-today { background-color: #ff2bd6; color: #05070d; border-radius: 2px; }
+.calendar-day:hover { background-color: rgba(0, 240, 255, 0.15); }
+
+/* overview / app grid */
+#overviewGroup { background-color: #05070d; }
+.search-entry {
+  background-color: rgba(11, 15, 26, 0.95);
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  border-radius: 2px;
+  color: #00f0ff;
+  caret-color: #ff2bd6;
+}
+.search-entry:focus { border-color: #ff2bd6; box-shadow: 0 0 12px rgba(255, 43, 214, 0.35); }
+.app-well-app .overview-icon, .grid-search-result .overview-icon, .app-folder .overview-icon { border-radius: 2px; color: #c8f7ff; }
+.app-well-app:hover .overview-icon, .app-well-app:focus .overview-icon,
+.app-folder:hover .overview-icon, .app-folder:focus .overview-icon {
+  background-color: rgba(0, 240, 255, 0.10);
+  box-shadow: inset 0 0 0 1px rgba(0, 240, 255, 0.6);
+}
+.app-folder-dialog { background-color: rgba(8, 11, 20, 0.97); border: 1px solid #ff2bd6; border-radius: 2px; }
+.folder-name-label, .folder-name-entry { color: #ff2bd6; font-weight: bold; }
+.app-well-app-running-dot { background-color: #00f0ff; width: 14px; height: 2px; border-radius: 0; }
+.workspace-thumbnail-indicator { border: 2px solid #ff2bd6; border-radius: 0; }
+.window-caption { background-color: #0b0f1a; color: #00f0ff; border-radius: 0; }
+
+/* notifications */
+.notification-banner, .message {
+  background-color: rgba(8, 11, 20, 0.97);
+  border-left: 3px solid #ff2bd6;
+  border-radius: 2px;
+}
+.message-title { color: #00f0ff; }
+
+/* dialogs & OSD */
+.modal-dialog, .end-session-dialog { background-color: #0b0f1a; border: 1px solid rgba(0, 240, 255, 0.5); border-radius: 2px; }
+.modal-dialog .modal-dialog-button:default, .button.default { background-color: #00f0ff; color: #05070d; }
+.osd-window { background-color: rgba(8, 11, 20, 0.95); border: 1px solid #00f0ff; border-radius: 2px; color: #00f0ff; }
+.switcher-list { background-color: rgba(8, 11, 20, 0.97); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 2px; }
+.switcher-list .item-box:selected { background-color: rgba(255, 43, 214, 0.25); }
+
+/* AttackFrame HUD extension */
+.af-hud-label { font-family: "JetBrainsMono Nerd Font", monospace; font-weight: bold; font-size: 10pt; color: #00f0ff; }
+
+/* overview dash */
+#dash .dash-background {
+  background-color: rgba(5, 7, 13, 0.92);
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 2px;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.2);
+}
+#dash .dash-separator { background-color: rgba(255, 43, 214, 0.5); }

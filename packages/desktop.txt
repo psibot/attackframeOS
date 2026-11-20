@@ -1,0 +1,71 @@
+# ---- GNOME desktop -------------------------------------------------------
+gdm
+gnome-shell
+gnome-control-center
+gnome-settings-daemon
+gnome-session
+gnome-terminal
+gnome-text-editor
+gnome-system-monitor
+gnome-disk-utility
+gnome-tweaks
+gnome-keyring
+gnome-shell-extensions
+gnome-shell-extension-appindicator
+nautilus
+file-roller
+evince
+loupe
+xdg-user-dirs-gtk
+xdg-desktop-portal-gnome
+gvfs
+networkmanager
+networkmanager-openvpn
+pipewire
+pipewire-pulse
+wireplumber
+dconf
+glib2
+glib2-devel
+# ---- look & feel ---------------------------------------------------------
+adw-gtk-theme
+papirus-icon-theme
+ttf-jetbrains-mono-nerd
+noto-fonts
+noto-fonts-emoji
+# ---- shell / workflow ----------------------------------------------------
+zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+tmux
+fzf
+bat
+eza
+ripgrep
+btop
+fastfetch
+neovim
+git
+sudo
+firefox
+# ---- container layer (Kali userland) -------------------------------------
+podman
+distrobox
+fuse-overlayfs
+# ---- installer / VM guests -----------------------------------------------
+archinstall
+rsync
+spice-vdagent
+open-vm-tools
+qemu-guest-agent
+
+# build tools: Ruby/Python tools compile native gems in their install scriptlets
+base-devel
+
+# TLS roots: ca-certificates-utils *provides* "ca-certificates", so pacman would
+# otherwise skip the real Mozilla root bundle and leave the trust store empty
+ca-certificates
+ca-certificates-mozilla
+# BlackArch repo config on the live system (pacman -S <tool> works live)
+blackarch-keyring
+blackarch-mirrorlist

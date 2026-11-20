@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# One-shot system setup. Runs on every live boot (fresh rootfs) and once on an
+# installed system. Done at boot rather than at ISO build time so nothing here
+# collides with files owned by packages.
+set -uo pipefail
+AFS=/usr/share/attackframe
+LIVE=0; [[ -d /run/archiso ]] && LIVE=1
+log() { echo "[attackframe-firstboot] $*"; }
+
+# ---- DNS: undo the build-time static resolv.conf on the live system ------
+if (( LIVE )) && [[ ! -L /etc/resolv.conf ]]; then
+  ln -sf ../run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+fi
+
+# ---- identity ------------------------------------------------------------
+rm -f /etc/os-release
+cat > /etc/os-release <<'EOF'
+NAME="AttackFrame OS"
+PRETTY_NAME="AttackFrame OS (rolling)"
+ID=attackframe
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;0;240;255"
+HOME_URL="https://blackarch.org/"
+LOGO=attackframe
+EOF
+
+# ---- BlackArch repo on the running system -------------------------------
+if [[ -f /etc/pacman.d/blackarch-mirrorlist ]] && ! grep -q '^\[blackarch\]' /etc/pacman.conf; then
+  printf '\n[blackarch]\nInclude = /etc/pacman.d/blackarch-mirrorlist\n' >> /etc/pacman.conf
+fi
+if [[ -f /etc/pacman.d/blackarch-mirrorlist ]] && ! grep -q '^Server' /etc/pacman.d/blackarch-mirrorlist; then
+  # enable the first listed mirror if none are active
+  sed -i '0,/^#Server/s/^#Server/Server/' /etc/pacman.d/blackarch-mirrorlist
+fi
+
+# ---- skeleton (zsh, GTK colors, terminal) --------------------------------
+cp -rT "$AFS/skel" /etc/skel
+sed -i 's#^SHELL=.*#SHELL=/usr/bin/zsh#' /etc/default/useradd 2>/dev/null || true
+
+# ---- GNOME Shell theme -----------------------------------------------------
+/usr/local/bin/attackframe-theme || true
+
+# ---- tool launchers + icon cache + dconf --------------------------------
+/usr/local/bin/attackframe-launchers || true
+for d in /usr/share/icons/hicolor /usr/share/icons/AttackFrame-*; do gtk-update-icon-cache -qf "$d" 2>/dev/null || true; done
+dconf update
+
+# ---- live operator account -------------------------------------------------
+if (( LIVE )); then
+  if ! id ghost &>/dev/null; then
+    useradd -m -G wheel -s /usr/bin/zsh -c "AttackFrame Operator" ghost
+    passwd -d ghost >/dev/null
+    getent group wireshark >/dev/null && usermod -aG wireshark ghost
+  fi
+  install -Dm440 /dev/stdin /etc/sudoers.d/attackframe-live <<<'ghost ALL=(ALL:ALL) NOPASSWD: ALL'
+  mkdir -p /etc/gdm
+  cat > /etc/gdm/custom.conf <<'EOF'
+[daemon]
+AutomaticLoginEnable=True
+AutomaticLogin=ghost
+WaylandEnable=true
+EOF
+else
+  mkdir -p /var/lib/attackframe && touch /var/lib/attackframe/firstboot.done
+fi
+log "complete (live=$LIVE)"

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Generate categorised app-grid launchers for installed tools from tools.tsv.
+# Re-run after installing new tools (attackframe-arsenal does this automatically).
+set -uo pipefail
+TSV=/usr/share/attackframe/tools.tsv
+OUT=/usr/share/applications
+rm -f "$OUT"/af-*.desktop
+
+n=0
+while IFS=$'\t' read -r id cat mode cmd name desc; do
+  [[ -z "$id" || "$id" == \#* ]] && continue
+  bin=${cmd%% *}
+  command -v "$bin" >/dev/null 2>&1 || continue
+  icon="attackframe-${cat,,}"
+  if [[ $mode == gui ]]; then
+    exec_line=$cmd; term=false
+  else
+    # show the tool's help, then leave an interactive shell open in $HOME
+    exec_line="gnome-terminal --title=\"$name // AttackFrame\" -- zsh -ic \"af-tool-intro $bin; exec zsh\""
+    term=false
+  fi
+  cat > "$OUT/af-$id.desktop" <<EOF
+[Desktop Entry]
+Type=Application
+Name=$name
+Comment=$desc
+Exec=$exec_line
+Icon=$icon
+Terminal=$term
+Categories=X-AttackFrame-$cat;
+Keywords=attackframe;pentest;$id;
+EOF
+  ((n++))
+done < "$TSV"
+
+cat > "$OUT/attackframe-arsenal.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=AttackFrame Arsenal
+Comment=Install BlackArch categories and the Kali tool layer
+Exec=gnome-terminal --title="ARSENAL // AttackFrame" -- zsh -ic "attackframe-arsenal menu; exec zsh"
+Icon=attackframe
+Terminal=false
+Categories=System;
+Keywords=blackarch;kali;tools;install;
+EOF
+echo "attackframe-launchers: $n tool launchers"

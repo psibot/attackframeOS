@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = gnome-shell
+
+[Action]
+Description = Rebuilding the AttackFrame GNOME Shell theme...
+When = PostTransaction
+Exec = /usr/local/bin/attackframe-theme

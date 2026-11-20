@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" width="640" height="480">
+<defs>
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070d"/><stop offset=".62" stop-color="#22062b"/><stop offset=".625" stop-color="#05070d"/></linearGradient></defs>
+<rect width="640" height="480" fill="url(#sky)"/>
+<g opacity=".7"><line x1="320.0" y1="300" x2="-2194.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-2080.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-1965.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-1851.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-1737.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-1622.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="-1508.6" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.14"/>
+<line x1="320.0" y1="300" x2="-1394.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.18"/>
+<line x1="320.0" y1="300" x2="-1280.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.23"/>
+<line x1="320.0" y1="300" x2="-1165.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.27"/>
+<line x1="320.0" y1="300" x2="-1051.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.31"/>
+<line x1="320.0" y1="300" x2="-937.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.36"/>
+<line x1="320.0" y1="300" x2="-822.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.40"/>
+<line x1="320.0" y1="300" x2="-708.6" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.45"/>
+<line x1="320.0" y1="300" x2="-594.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.49"/>
+<line x1="320.0" y1="300" x2="-480.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.54"/>
+<line x1="320.0" y1="300" x2="-365.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.58"/>
+<line x1="320.0" y1="300" x2="-251.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.63"/>
+<line x1="320.0" y1="300" x2="-137.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.67"/>
+<line x1="320.0" y1="300" x2="-22.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.72"/>
+<line x1="320.0" y1="300" x2="91.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.76"/>
+<line x1="320.0" y1="300" x2="205.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.81"/>
+<line x1="320.0" y1="300" x2="320.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.85"/>
+<line x1="320.0" y1="300" x2="434.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.81"/>
+<line x1="320.0" y1="300" x2="548.6" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.76"/>
+<line x1="320.0" y1="300" x2="662.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.72"/>
+<line x1="320.0" y1="300" x2="777.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.67"/>
+<line x1="320.0" y1="300" x2="891.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.63"/>
+<line x1="320.0" y1="300" x2="1005.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.58"/>
+<line x1="320.0" y1="300" x2="1120.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.54"/>
+<line x1="320.0" y1="300" x2="1234.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.49"/>
+<line x1="320.0" y1="300" x2="1348.6" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.45"/>
+<line x1="320.0" y1="300" x2="1462.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.40"/>
+<line x1="320.0" y1="300" x2="1577.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.36"/>
+<line x1="320.0" y1="300" x2="1691.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.31"/>
+<line x1="320.0" y1="300" x2="1805.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.27"/>
+<line x1="320.0" y1="300" x2="1920.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.23"/>
+<line x1="320.0" y1="300" x2="2034.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.18"/>
+<line x1="320.0" y1="300" x2="2148.6" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.14"/>
+<line x1="320.0" y1="300" x2="2262.9" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="2377.1" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="2491.4" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="2605.7" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="2720.0" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="320.0" y1="300" x2="2834.3" y2="480" stroke="#ff2bd6" stroke-width="1" opacity="0.12"/>
+<line x1="0" y1="302.6" x2="640" y2="302.6" stroke="#ff2bd6" stroke-width="1" opacity="0.20"/>
+<line x1="0" y1="310.4" x2="640" y2="310.4" stroke="#ff2bd6" stroke-width="1" opacity="0.24"/>
+<line x1="0" y1="323.4" x2="640" y2="323.4" stroke="#ff2bd6" stroke-width="1" opacity="0.29"/>
+<line x1="0" y1="341.6" x2="640" y2="341.6" stroke="#ff2bd6" stroke-width="1" opacity="0.33"/>
+<line x1="0" y1="365.0" x2="640" y2="365.0" stroke="#ff2bd6" stroke-width="1" opacity="0.38"/>
+<line x1="0" y1="393.6" x2="640" y2="393.6" stroke="#ff2bd6" stroke-width="1" opacity="0.42"/>
+<line x1="0" y1="427.4" x2="640" y2="427.4" stroke="#ff2bd6" stroke-width="1" opacity="0.47"/>
+<line x1="0" y1="466.4" x2="640" y2="466.4" stroke="#ff2bd6" stroke-width="1" opacity="0.51"/>
+<line x1="0" y1="510.6" x2="640" y2="510.6" stroke="#ff2bd6" stroke-width="1" opacity="0.56"/></g>
+<line x1="0" y1="300" x2="640" y2="300" stroke="#00f0ff" stroke-width="1.5" filter="url(#glow)"/>
+<g font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace" font-weight="800" text-anchor="middle" font-size="46" letter-spacing="5">
+<text x="318.0" y="120" fill="#00f0ff" opacity=".7">ATTACK//FRAME</text>
+<text x="322.0" y="122" fill="#ff2bd6" opacity=".7">ATTACK//FRAME</text>
+<text x="320.0" y="121" fill="#c8f7ff">ATTACK//FRAME</text></g>
+<text x="320.0" y="150" text-anchor="middle" font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace" font-size="11" letter-spacing="4" fill="#00f0ff">OFFENSIVE OPERATIONS PLATFORM</text>
+<path d="M14,40 V14 H40" fill="none" stroke="#00f0ff" stroke-width="1.5"/><path d="M600,14 H626 V40" fill="none" stroke="#00f0ff" stroke-width="1.5"/><path d="M14,440 V466 H40" fill="none" stroke="#00f0ff" stroke-width="1.5"/><path d="M600,466 H626 V440" fill="none" stroke="#00f0ff" stroke-width="1.5"/>
+</svg>

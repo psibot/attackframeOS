@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+# attackframe-kali — the Kali Linux tool layer.
+# Kali is Debian-based and BlackArch is Arch-based, so their packages cannot share
+# one root filesystem. AttackFrame runs the full Kali repository in a rootful
+# distrobox container that shares the host network, home directory, USB devices and
+# display, so Kali tools behave like native ones (raw sockets included).
+set -euo pipefail
+
+NAME=${AF_KALI_NAME:-kali}
+IMAGE=${AF_KALI_IMAGE:-docker.io/kalilinux/kali-rolling:latest}
+C=$'\e[38;2;0;240;255m'; M=$'\e[38;2;255;43;214m'; Y=$'\e[38;2;245;255;59m'; R=$'\e[0m'
+
+exists() { sudo podman container exists "$NAME" 2>/dev/null; }
+inside() { distrobox enter --root "$NAME" -- "$@"; }
+
+usage() {
+  cat <<EOF
+${C}attackframe-kali${R} — Kali repository layer
+
+  ${Y}setup${R} [meta]        create the container and install a Kali metapackage
+                     meta: default (default) | large | everything | headless | top10
+                           or any kali-tools-* name, e.g. tools-wireless
+  ${Y}enter${R}              open a Kali shell
+  ${Y}run${R} <cmd...>       run one command in Kali  (shortcut: ${M}kali <cmd>${R})
+  ${Y}install${R} <pkg...>   apt install inside Kali
+  ${Y}export${R} <bin|app>   expose a Kali binary in ~/.local/bin or a GUI app in the app grid
+  ${Y}update${R}             apt full-upgrade inside Kali
+  ${Y}remove${R}             delete the container
+EOF
+}
+
+setup() {
+  local meta=${1:-default}
+  case $meta in
+    kali-*) ;;
+    top10|tools-*) meta=kali-tools-${meta#tools-} ;;
+    *) meta=kali-linux-$meta ;;
+  esac
+  if ! exists; then
+    echo "${C}>>${R} creating rootful Kali container from $IMAGE"
+    distrobox create --root --yes --name "$NAME" --image "$IMAGE" \
+      --additional-flags "--cap-add=NET_ADMIN --cap-add=NET_RAW --device=/dev/net/tun"
+  fi
+  echo "${C}>>${R} installing ${M}$meta${R} (kali-linux-everything is ~15+ GB)"
+  inside sudo bash -c "export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get -y full-upgrade && apt-get -y install $meta"
+  echo "${C}>>${R} ready. Use: ${M}kali <tool>${R}  or  ${M}attackframe-kali enter${R}"
+}
+
+export_one() {
+  local x=$1
+  if inside test -f "/usr/share/applications/$x.desktop"; then
+    inside distrobox-export --app "$x"
+  else
+    local path; path=$(inside sh -c "command -v '$x'") || { echo "not found in Kali: $x" >&2; exit 1; }
+    inside distrobox-export --bin "$path" --export-path "$HOME/.local/bin"
+  fi
+}
+
+case "${1:-}" in
+  setup)   shift; setup "${1:-default}" ;;
+  enter)   exists || { echo "run: attackframe-kali setup" >&2; exit 1; }; exec distrobox enter --root "$NAME" ;;
+  run)     shift; exec distrobox enter --root "$NAME" -- "$@" ;;
+  install) shift; inside sudo env DEBIAN_FRONTEND=noninteractive apt-get -y install "$@" ;;
+  export)  shift; for x in "$@"; do export_one "$x"; done ;;
+  update)  exists && inside sudo bash -c 'export DEBIAN_FRONTEND=noninteractive; apt-get update && apt-get -y full-upgrade' ;;
+  remove)  distrobox rm --root --force "$NAME" ;;
+  *)       usage ;;
+esac

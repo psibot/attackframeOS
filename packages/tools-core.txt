@@ -1,0 +1,89 @@
+# Curated arsenal baked into the ISO (Arch official + BlackArch repos).
+# Everything else: `attackframe-arsenal install <category>` or `attackframe-kali setup`.
+# Names that disappear from the repos are skipped at build time with a warning.
+
+# 01 RECON
+nmap
+masscan
+rustscan
+amass
+subfinder
+dnsenum
+dnsrecon
+whatweb
+theharvester
+enum4linux-ng
+smbmap
+netdiscover
+arp-scan
+# 02 WEB
+burpsuite
+zaproxy
+sqlmap
+nikto
+gobuster
+ffuf
+feroxbuster
+wfuzz
+wpscan
+nuclei
+httpx
+# 03 EXPLOIT
+metasploit
+exploitdb
+python-pwntools
+# 04 CRACK
+john
+hashcat
+hydra
+medusa
+crunch
+cewl
+hashid
+seclists
+# 05 WIRELESS
+aircrack-ng
+kismet
+reaver
+wifite
+hcxtools
+hcxdumptool
+# 06 SNIFF / SPOOF
+wireshark-qt
+tcpdump
+ettercap
+bettercap
+responder
+mitmproxy
+# 07 ACTIVE DIRECTORY
+impacket
+netexec
+evil-winrm
+bloodhound
+bloodhound-python
+kerbrute
+certipy
+# 08 REVERSE
+ghidra
+radare2
+rizin
+gdb
+pwndbg
+binwalk
+jadx
+android-apktool
+# 09 FORENSICS
+volatility3
+sleuthkit
+foremost
+perl-image-exiftool
+testdisk
+# PIVOT / UTIL
+proxychains-ng
+tor
+openvpn
+wireguard-tools
+socat
+openbsd-netcat
+chisel
+ligolo-ng

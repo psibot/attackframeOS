@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# AttackFrame terminal banner.
+C=$'\e[38;2;0;240;255m'; M=$'\e[38;2;255;43;214m'; Y=$'\e[38;2;245;255;59m'; D=$'\e[38;2;90;110;140m'; R=$'\e[0m'
+cat <<EOF
+${C} ▄▀█ ▀█▀ ▀█▀ ▄▀█ █▀▀ █▄▀ ${M}▞▞ ${C}█▀▀ █▀█ ▄▀█ █▀▄▀█ █▀▀
+${C} █▀█  █   █  █▀█ █▄▄ █ █ ${M}▞▞ ${C}█▀  █▀▄ █▀█ █ ▀ █ ██▄${R}
+${D} ─────────────────────────────────────────────────${R}
+EOF
+lan=$(ip -4 -o addr show scope global 2>/dev/null | awk '$2 !~ /^(tun|tap|wg|ppp|docker|podman|veth|br-)/{split($4,a,"/");print a[1];exit}')
+vpn=$(ip -4 -o addr show 2>/dev/null | awk '$2 ~ /^(tun|tap|wg|ppp)/{split($4,a,"/");print $2" "a[1];exit}')
+tgt=$(cat "${XDG_CONFIG_HOME:-$HOME/.config}/attackframe/target" 2>/dev/null)
+kern=$(uname -r)
+# group membership from the local package db (works without a synced repo db)
+nba=$(pacman -Qg 2>/dev/null | awk '$1 ~ /^blackarch/{print $2}' | sort -u | wc -l)
+printf " ${D}operator${R} %-14s ${D}node${R} %-16s ${D}kernel${R} %s\n" "$USER" "$(cat /etc/hostname 2>/dev/null)" "$kern"
+printf " ${D}lan${R}      ${C}%-14s${R} ${D}vpn${R}  ${Y}%-16s${R} ${D}target${R} ${M}%s${R}\n" "${lan:-offline}" "${vpn:-down}" "${tgt:-none}"
+printf " ${D}arsenal${R}  %s BlackArch categories   ${D}kali layer${R} %s\n\n" "$nba" \
+  "$(sudo -n podman container exists kali 2>/dev/null && echo online || echo 'offline (attackframe-kali setup)')"

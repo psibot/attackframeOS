@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace">
+<defs>
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bigglow" x="-30%" y="-30%" width="160%" height="160%">
+  <feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+  <rect width="4" height="1" fill="#000" opacity=".35"/>
+</pattern>
+<radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+  <stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".75"/>
+</radialGradient><filter id="blob" filterUnits="userSpaceOnUse" x="-600" y="-600" width="3120" height="2280"><feGaussianBlur stdDeviation="90"/></filter><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0"/></filter></defs>
+<rect width="1920" height="1080" fill="#0a0614"/>
+<ellipse cx="1779" cy="194" rx="462" ry="319" fill="#ff2bd6" opacity="0.59" filter="url(#blob)"/><ellipse cx="1062" cy="467" rx="271" ry="294" fill="#00f0ff" opacity="0.59" filter="url(#blob)"/><ellipse cx="1902" cy="273" rx="469" ry="246" fill="#7a2bff" opacity="0.50" filter="url(#blob)"/><ellipse cx="778" cy="276" rx="366" ry="361" fill="#00ffb3" opacity="0.52" filter="url(#blob)"/><ellipse cx="652" cy="141" rx="253" ry="403" fill="#ff2bd6" opacity="0.48" filter="url(#blob)"/><ellipse cx="946" cy="450" rx="279" ry="252" fill="#ff7a2b" opacity="0.59" filter="url(#blob)"/><rect width="1920" height="1080" filter="url(#grain)"/><text x="960.0" y="560.0" font-size="72" fill="#c8f7ff" opacity="0.92" text-anchor="middle" xml:space="preserve" font-weight="200" letter-spacing="26">ATTACK//FRAME</text>
+<rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

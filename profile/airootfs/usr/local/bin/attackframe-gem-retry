@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Re-run the post_install scriptlet of the packages given on stdin (from a pacman hook).
+rc=0
+while read -r pkg; do
+  dir=$(compgen -G "/var/lib/pacman/local/$pkg-[0-9]*" | head -1)
+  [[ -f $dir/install ]] || continue
+  echo ":: re-running post_install for $pkg"
+  bash -c '. "$1"; post_install' _ "$dir/install" || { echo "!! $pkg gem bundle failed" >&2; rc=1; }
+done
+exit $rc

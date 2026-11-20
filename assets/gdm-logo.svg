@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 80" width="480" height="80">
+<defs>
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter></defs>
+<g font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace" font-weight="800" text-anchor="middle" font-size="48" letter-spacing="5">
+<text x="238" y="52" fill="#00f0ff" opacity=".75">ATTACK//FRAME</text>
+<text x="242" y="54" fill="#ff2bd6" opacity=".75">ATTACK//FRAME</text>
+<text x="240" y="53" fill="#c8f7ff" filter="url(#softglow)">ATTACK//FRAME</text></g>
+<text x="240" y="74" text-anchor="middle" font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace" font-size="10" letter-spacing="5" fill="#00f0ff">OFFENSIVE OPERATIONS PLATFORM</text>
+</svg>

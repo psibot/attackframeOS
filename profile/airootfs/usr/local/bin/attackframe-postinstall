@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+# attackframe-postinstall — turn a fresh archinstall target into AttackFrame OS.
+#
+#   1. boot the AttackFrame live ISO
+#   2. sudo archinstall      (choose: Profile = minimal, keep the target mounted at /mnt,
+#                             answer "no" to chroot at the end)
+#   3. sudo attackframe-postinstall /mnt
+#   4. reboot
+#
+# What it does:
+#   - repairs the CA certificate store (live system and target) so HTTPS works
+#   - runs BlackArch's official strap.sh inside the target (keyring + mirrorlist + repo)
+#   - installs the same package set as the live ISO
+#   - copies the AttackFrame theme, wallpapers, icons, HUD and services
+set -euo pipefail
+T=${1:-/mnt}
+((EUID == 0)) || { echo "run as root (sudo attackframe-postinstall /mnt)" >&2; exit 1; }
+[[ -d $T/etc && -x $T/usr/bin/pacman ]] || { echo "$T does not look like an installed Arch root (did archinstall finish and leave it mounted?)" >&2; exit 1; }
+say()  { printf '\e[38;2;0;240;255m[AF]\e[0m %s\n' "$*"; }
+warn() { printf '\e[38;2;255;0;170m[AF:warn]\e[0m %s\n' "$*" >&2; }
+die()  { printf '\e[38;2;255;0;170m[AF:error]\e[0m %s\n' "$*" >&2; exit 1; }
+BUNDLE=etc/ca-certificates/extracted/tls-ca-bundle.pem
+
+# ------------------------------------------------------------------ CA certificates
+# Early AttackFrame ISOs shipped without ca-certificates-mozilla (an empty trust store),
+# which breaks curl, pacman over https and Firefox. Fix the live system first.
+if [[ ! -s /$BUNDLE ]]; then
+  say "live system has no CA certificates — installing ca-certificates-mozilla"
+  tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+  # Plain-http mirrors are safe here: pacman still verifies every package signature.
+  # shellcheck disable=SC2016  # $repo/$arch are pacman variables, not shell
+  { sed -n 's|^#\?Server *= *https://|Server = http://|p' /etc/pacman.d/mirrorlist
+    echo 'Server = http://mirrors.kernel.org/archlinux/$repo/os/$arch'
+    echo 'Server = http://mirror.rackspace.com/archlinux/$repo/os/$arch'
+  } > "$tmp/mirrorlist"
+  printf '[options]\nArchitecture = auto\nSigLevel = Required DatabaseOptional\n[core]\nInclude = %s\n' \
+    "$tmp/mirrorlist" > "$tmp/pacman.conf"
+  pacman --config "$tmp/pacman.conf" -Sy --noconfirm ca-certificates ca-certificates-mozilla
+  update-ca-trust
+  [[ -s /$BUNDLE ]] || die "could not repair the live CA store"
+fi
+if [[ ! -s $T/$BUNDLE ]]; then
+  say "seeding the target's CA store from the live system"
+  cp -a --remove-destination /etc/ca-certificates/extracted/. "$T/etc/ca-certificates/extracted/"
+fi
+arch-chroot "$T" pacman -Sy --needed --noconfirm ca-certificates ca-certificates-mozilla
+arch-chroot "$T" update-ca-trust
+[[ -s $T/$BUNDLE ]] || die "target CA store is still empty"
+
+# ------------------------------------------------------------------ BlackArch (strap.sh)
+say "adding the BlackArch repository with the official strap.sh"
+# drop any half-configured [blackarch] block from an earlier attempt; strap.sh re-adds it
+sed -i '/^\[blackarch\]/,/^Include.*blackarch-mirrorlist/d' "$T/etc/pacman.conf"
+curl -fsSL -o "$T/root/strap.sh" https://blackarch.org/strap.sh || die "could not download strap.sh"
+say "strap.sh sha1: $(sha1sum "$T/root/strap.sh" | cut -d' ' -f1)  (compare: https://blackarch.org/downloads.html)"
+if [[ -n ${STRAP_SHA1:-} && $(sha1sum "$T/root/strap.sh" | cut -d' ' -f1) != "$STRAP_SHA1" ]]; then
+  die "strap.sh checksum mismatch (expected $STRAP_SHA1)"
+fi
+chmod +x "$T/root/strap.sh"
+# setsid: no controlling tty, so strap.sh skips its interactive "pacman -Su" prompt —
+# the full upgrade happens in the package step below.
+arch-chroot "$T" env TERM="${TERM:-dumb}" setsid -w /root/strap.sh < /dev/null || die "strap.sh failed"
+rm -f "$T/root/strap.sh"
+if ! { grep -q '^\[blackarch\]' "$T/etc/pacman.conf" && [[ -s $T/etc/pacman.d/blackarch-mirrorlist ]]; }; then
+  die "BlackArch repository was not configured"
+fi
+
+# ------------------------------------------------------------------ packages
+say "installing the AttackFrame package set (same as the live ISO)"
+mapfile -t pkgs < <(grep -vxE 'archiso|mkinitcpio-archiso|syslinux|memtest86\+.*|edk2-shell|grml-zsh-config' /usr/share/attackframe/packages.txt)
+arch-chroot "$T" pacman -Syu --overwrite '/usr/share/pacman/keyrings/blackarch*' --needed --noconfirm \
+  ca-certificates ca-certificates-mozilla blackarch-keyring blackarch-mirrorlist "${pkgs[@]}"
+
+# ------------------------------------------------------------------ AttackFrame files
+say "copying AttackFrame system files"
+for p in /usr/local/bin /usr/share/attackframe /usr/share/backgrounds/attackframe \
+         /usr/share/gnome-background-properties/attackframe.xml \
+         /usr/share/gnome-shell/extensions/attackframe-hud@attackframe \
+         /etc/dconf/profile/user /etc/dconf/profile/gdm /etc/dconf/db/local.d/00-attackframe /etc/dconf/db/gdm.d/01-attackframe \
+         /etc/systemd/system/attackframe-firstboot.service \
+         /etc/pacman.d/hooks/attackframe-shell-theme.hook \
+         /etc/pacman.d/hooks/zz-attackframe-gem-retry.hook; do
+  [[ -e $p ]] || { warn "missing on live system, skipped: $p"; continue; }
+  install -d "$T$(dirname "$p")"; cp -a "$p" "$T$(dirname "$p")/"
+done
+install -d "$T/usr/share/icons/hicolor/scalable/apps"
+cp -a /usr/share/icons/hicolor/scalable/apps/attackframe*.svg "$T/usr/share/icons/hicolor/scalable/apps/"
+cp -a /usr/share/icons/AttackFrame-* "$T/usr/share/icons/" 2>/dev/null || warn "AttackFrame icon themes not found on this ISO"
+for d in "$T"/usr/share/icons/AttackFrame-*; do
+  [[ -d $d ]] && { arch-chroot "$T" gtk-update-icon-cache -qf "/usr/share/icons/$(basename "$d")" || true; }
+done
+printf "%s\n" cewl evil-winrm whatweb | arch-chroot "$T" /usr/local/bin/attackframe-gem-retry || true
+
+# ------------------------------------------------------------------ services
+say "enabling services"
+arch-chroot "$T" systemctl enable gdm NetworkManager attackframe-firstboot
+arch-chroot "$T" systemctl set-default graphical.target
+
+# ------------------------------------------------------------------ users
+say "applying the operator profile to existing users"
+cp -rT /usr/share/attackframe/skel "$T/etc/skel"
+for home in "$T"/home/*; do
+  [[ -d $home ]] || continue
+  u=$(basename "$home")
+  cp -rT /usr/share/attackframe/skel "$home"
+  arch-chroot "$T" chown -R "$u:" "/home/$u"
+  arch-chroot "$T" chsh -s /usr/bin/zsh "$u" || true
+  arch-chroot "$T" usermod -aG wireshark "$u" 2>/dev/null || true
+done
+say "done — reboot into AttackFrame OS"

@@ -1,0 +1,7 @@
+[org/gnome/login-screen]
+logo='/usr/share/attackframe/gdm-logo.svg'
+
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+accent-color='teal'
+clock-show-seconds=true

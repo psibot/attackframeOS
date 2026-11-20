@@ -1,0 +1,15 @@
+# cewl, evil-winrm and whatweb run `bundle install` in post_install, which needs
+# make/gcc. In a single pacstrap transaction those may not be installed yet, so
+# re-run the scriptlet once the whole transaction has finished.
+[Trigger]
+Operation = Install
+Type = Package
+Target = cewl
+Target = evil-winrm
+Target = whatweb
+
+[Action]
+Description = AttackFrame: finishing Ruby gem bundles...
+When = PostTransaction
+Exec = /usr/local/bin/attackframe-gem-retry
+NeedsTargets

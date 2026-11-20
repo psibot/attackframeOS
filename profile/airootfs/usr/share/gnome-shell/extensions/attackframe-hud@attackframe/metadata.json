@@ -1,0 +1,7 @@
+{
+  "uuid": "attackframe-hud@attackframe",
+  "name": "AttackFrame HUD",
+  "description": "Operator HUD in the top bar: LAN / VPN address and current target, with one-click copy.",
+  "shell-version": ["45", "46", "47", "48", "49", "50", "51", "52"],
+  "version": 1
+}

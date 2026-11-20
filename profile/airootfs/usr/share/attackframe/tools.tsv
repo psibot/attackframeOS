@@ -1,0 +1,59 @@
+# id	category	mode	command	name	description
+# mode: gui = launch directly, cli = open in AttackFrame terminal with the command's help, then a shell
+nmap	Recon	cli	nmap	Nmap	Network mapper and port scanner
+masscan	Recon	cli	masscan	Masscan	Internet-scale async port scanner
+rustscan	Recon	cli	rustscan	RustScan	Fast port discovery feeding nmap
+amass	Recon	cli	amass	Amass	Attack-surface and subdomain mapping
+subfinder	Recon	cli	subfinder	Subfinder	Passive subdomain discovery
+dnsrecon	Recon	cli	dnsrecon	DNSRecon	DNS enumeration
+theharvester	Recon	cli	theHarvester	theHarvester	Emails, hosts and names from OSINT
+whatweb	Recon	cli	whatweb	WhatWeb	Web technology fingerprinting
+enum4linux-ng	Recon	cli	enum4linux-ng	enum4linux-ng	SMB / Windows enumeration
+netdiscover	Recon	cli	netdiscover	Netdiscover	ARP host discovery
+burpsuite	Web	gui	burpsuite	Burp Suite	Web proxy and testing platform
+zaproxy	Web	gui	zaproxy	ZAP	OWASP web app scanner
+sqlmap	Web	cli	sqlmap	sqlmap	SQL injection automation
+nikto	Web	cli	nikto	Nikto	Web server scanner
+gobuster	Web	cli	gobuster	Gobuster	Directory / DNS / vhost brute force
+ffuf	Web	cli	ffuf	ffuf	Fast web fuzzer
+feroxbuster	Web	cli	feroxbuster	Feroxbuster	Recursive content discovery
+wpscan	Web	cli	wpscan	WPScan	WordPress scanner
+nuclei	Web	cli	nuclei	Nuclei	Template-based vuln scanner
+metasploit	Exploit	cli	msfconsole	Metasploit	Exploitation framework console
+searchsploit	Exploit	cli	searchsploit	SearchSploit	Offline Exploit-DB search
+john	Crack	cli	john	John the Ripper	Password cracker
+hashcat	Crack	cli	hashcat	Hashcat	GPU password recovery
+hydra	Crack	cli	hydra	Hydra	Online login brute force
+crunch	Crack	cli	crunch	Crunch	Wordlist generator
+cewl	Crack	cli	cewl	CeWL	Wordlists from websites
+hashid	Crack	cli	hashid	hashID	Hash type identifier
+aircrack-ng	Wireless	cli	aircrack-ng	Aircrack-ng	Wi-Fi auditing suite
+wifite	Wireless	cli	wifite	Wifite	Automated wireless auditing
+kismet	Wireless	cli	kismet	Kismet	Wireless sniffer and IDS
+hcxdumptool	Wireless	cli	hcxdumptool	hcxdumptool	PMKID / handshake capture
+wireshark	Sniff	gui	wireshark	Wireshark	Packet analyzer
+tcpdump	Sniff	cli	tcpdump	tcpdump	CLI packet capture
+bettercap	Sniff	cli	bettercap	Bettercap	Network attack and MITM framework
+responder	Sniff	cli	responder	Responder	LLMNR / NBT-NS poisoner
+mitmproxy	Sniff	cli	mitmproxy	mitmproxy	Interactive HTTPS proxy
+ettercap	Sniff	gui	ettercap -G	Ettercap	MITM suite
+netexec	AD	cli	nxc	NetExec	Network service exploitation (ex-CME)
+impacket	AD	cli	impacket-secretsdump	Impacket	Windows protocol toolkit
+evil-winrm	AD	cli	evil-winrm	Evil-WinRM	WinRM shell
+bloodhound	AD	gui	bloodhound	BloodHound	AD attack-path graphing
+kerbrute	AD	cli	kerbrute	Kerbrute	Kerberos user enum / spraying
+certipy	AD	cli	certipy	Certipy	AD CS abuse
+ghidra	Reverse	gui	ghidra	Ghidra	Reverse-engineering suite
+radare2	Reverse	cli	r2	radare2	RE framework
+gdb	Reverse	cli	gdb	GDB	Debugger (pwndbg when installed)
+binwalk	Reverse	cli	binwalk	Binwalk	Firmware analysis
+jadx	Reverse	gui	jadx-gui	JADX	Android DEX decompiler
+volatility3	Forensics	cli	vol	Volatility 3	Memory forensics
+sleuthkit	Forensics	cli	fls	Sleuth Kit	Disk image forensics
+foremost	Forensics	cli	foremost	Foremost	File carving
+exiftool	Forensics	cli	exiftool	ExifTool	Metadata reader / writer
+proxychains	Pivot	cli	proxychains	ProxyChains	Route tools through proxies
+chisel	Pivot	cli	chisel	Chisel	TCP/UDP tunnel over HTTP
+ligolo-ng	Pivot	cli	ligolo-proxy	Ligolo-ng	Tunnel-based pivoting
+socat	Pivot	cli	socat	socat	Multipurpose relay
+kali-shell	Pivot	cli	kali	Kali Shell	Shell inside the Kali tool layer

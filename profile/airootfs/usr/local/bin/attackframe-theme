@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Build the AttackFrame GNOME Shell theme: stock dark shell CSS + AttackFrame overrides.
+# Run by attackframe-firstboot and by a pacman hook whenever gnome-shell is upgraded.
+set -uo pipefail
+AFS=/usr/share/attackframe
+log() { echo "[attackframe-theme] $*"; }
+src=/usr/share/gnome-shell/gnome-shell-theme.gresource
+dst=/usr/share/themes/AttackFrame/gnome-shell
+if [[ -f $src ]] && command -v gresource >/dev/null; then
+  rm -rf "$dst"; mkdir -p "$dst"
+  while read -r res; do
+    rel=${res#/org/gnome/shell/theme/}
+    mkdir -p "$dst/$(dirname "$rel")"
+    gresource extract "$src" "$res" > "$dst/$rel"
+  done < <(gresource list "$src")
+  base=$dst/gnome-shell-dark.css; [[ -f $base ]] || base=$dst/gnome-shell.css
+  cp "$base" "$dst/.base.css"
+  cat "$dst/.base.css" "$AFS/shell/overrides.css" > "$dst/gnome-shell.css"
+  rm -f "$dst/.base.css"
+  log "shell theme built from $(basename "$base")"
+fi
+
+if [[ ! -f /usr/share/themes/AttackFrame/gnome-shell/gnome-shell.css ]]; then
+  log "could not build the shell theme (is glib2-devel installed?)" >&2; exit 1
+fi

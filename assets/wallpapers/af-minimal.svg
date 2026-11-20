@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080" font-family="'JetBrainsMono Nerd Font','JetBrains Mono','DejaVu Sans Mono',monospace">
+<defs>
+<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+  <feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="bigglow" x="-30%" y="-30%" width="160%" height="160%">
+  <feGaussianBlur stdDeviation="18" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<pattern id="scan" width="4" height="4" patternUnits="userSpaceOnUse">
+  <rect width="4" height="1" fill="#000" opacity=".35"/>
+</pattern>
+<radialGradient id="vignette" cx="50%" cy="50%" r="75%">
+  <stop offset="55%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".75"/>
+</radialGradient><radialGradient id="mglow" cx="50%" cy="46%" r="55%"><stop offset="0" stop-color="#14123a"/><stop offset="1" stop-color="#05060c"/></radialGradient><pattern id="dots" width="32" height="32" patternUnits="userSpaceOnUse"><circle cx="16" cy="16" r="1.2" fill="#3a4660"/></pattern></defs>
+<rect width="1920" height="1080" fill="#05070d"/>
+<rect width="1920" height="1080" fill="url(#mglow)"/>
+<rect width="1920" height="1080" fill="url(#dots)" opacity=".55"/>
+<polygon points="1063.9,570.0 960.0,630.0 856.1,570.0 856.1,450.0 960.0,390.0 1063.9,450.0" fill="none" stroke="#00f0ff" stroke-width="3" filter="url(#glow)"/>
+<path d="M922.0,562.0 L956.0,458.0 M964.0,562.0 L998.0,458.0" stroke="#ff2bd6" stroke-width="12" stroke-linecap="round" filter="url(#glow)"/>
+<text x="960.0" y="710.0" font-size="34" fill="#c8f7ff" opacity="0.95" text-anchor="middle" xml:space="preserve" font-weight="300" letter-spacing="22">ATTACKFRAME</text>
+<text x="960.0" y="745.0" font-size="13" fill="#00f0ff" opacity="0.80" text-anchor="middle" xml:space="preserve" letter-spacing="14">OPERATOR</text>
+<line x1="800.0" y1="765.0" x2="1120.0" y2="765.0" stroke="#ff2bd6" stroke-width="1.5" opacity=".7"/>
+<path d="M40,86 V40 H86" fill="none" stroke="#3a4660" stroke-width="1.5"/><path d="M1834,40 H1880 V86" fill="none" stroke="#3a4660" stroke-width="1.5"/><path d="M40,994 V1040 H86" fill="none" stroke="#3a4660" stroke-width="1.5"/><path d="M1834,1040 H1880 V994" fill="none" stroke="#3a4660" stroke-width="1.5"/>
+<rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

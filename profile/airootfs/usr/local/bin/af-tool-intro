@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Header + usage for a tool opened from the app grid.
+bin=${1:?tool}
+C=$'\e[38;2;0;240;255m'; M=$'\e[38;2;255;43;214m'; D=$'\e[38;2;90;110;140m'; R=$'\e[0m'
+printf '%s┌─[ %s%s%s ]%s\n' "$C" "$M" "${bin^^}" "$C" "$R"
+printf '%s└──╼ %s%s\n\n' "$C" "$(command -v "$bin")" "$R"
+case $bin in
+  kali) exec kali ;;
+  msfconsole|r2|gdb|vol|mitmproxy|bettercap) printf '%stype %s%s%s to start%s\n' "$D" "$M" "$bin" "$D" "$R" ;;
+  *) { "$bin" --help 2>&1 || "$bin" -h 2>&1; } | head -n 40 ;;
+esac
+tgt=$(cat "${XDG_CONFIG_HOME:-$HOME/.config}/attackframe/target" 2>/dev/null)
+printf '\n%s[ man %s  |  target: %s  |  set one with: target <ip> ]%s\n' "$D" "$bin" "${tgt:-none}" "$R"

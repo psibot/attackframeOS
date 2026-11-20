@@ -1,0 +1,91 @@
+#!/usr/bin/env bash
+# attackframe-arsenal — manage the BlackArch (native) and Kali (container) tool layers.
+set -uo pipefail
+
+C=$'\e[38;2;0;240;255m'; M=$'\e[38;2;255;43;214m'; Y=$'\e[38;2;245;255;59m'; D=$'\e[38;2;90;110;140m'; R=$'\e[0m'
+SUDO=; ((EUID)) && SUDO=sudo
+LOG=${XDG_STATE_HOME:-$HOME/.local/state}/attackframe/arsenal.log
+
+usage() {
+  cat <<EOF
+${C}attackframe-arsenal${R} — the AttackFrame tool layer manager
+
+  ${Y}categories${R}              list BlackArch categories with package counts
+  ${Y}show${R} <category>         list tools in a category (e.g. ${D}webapp${R})
+  ${Y}install${R} <cat|pkg>...    install BlackArch categories and/or packages
+  ${Y}full${R}                    install every BlackArch package (tens of GB)
+  ${Y}search${R} <term>           search BlackArch + Arch repos
+  ${Y}kali${R} [args]             manage the Kali container (see attackframe-kali)
+  ${Y}update${R}                  update the native system and the Kali container
+  ${Y}menu${R}                    interactive menu
+EOF
+}
+
+categories() {
+  pacman -Sg | awk '$1 ~ /^blackarch-/' | sort | uniq -c | sort -rn |
+    awk -v c="$C" -v r="$R" '{ sub("blackarch-","",$2); printf "  %s%-18s%s %5d tools\n", c, $2, r, $1 }'
+}
+
+show() { pacman -Sgq "blackarch-${1#blackarch-}" | column -c "${COLUMNS:-100}"; }
+
+# Install a group as a whole; if the solver hits a conflict, fall back to
+# installing its members one by one and log the ones that fail.
+install_group() {
+  local g=$1
+  echo "${M}>>${R} installing ${C}$g${R}"
+  if $SUDO pacman -S --needed --noconfirm "$g"; then return; fi
+  echo "${Y}!! group install hit a conflict — falling back to per-package${R}"
+  mkdir -p "$(dirname "$LOG")"
+  local p
+  while read -r p; do
+    pacman -Qq "$p" &>/dev/null && continue
+    $SUDO pacman -S --needed --noconfirm "$p" >/dev/null 2>&1 || { echo "$g $p" >> "$LOG"; echo "   ${D}skip $p${R}"; }
+  done < <(pacman -Sgq "$g")
+  echo "${D}failed packages logged to $LOG${R}"
+}
+
+install_items() {
+  $SUDO pacman -Sy
+  local x
+  for x in "$@"; do
+    if pacman -Sgq "blackarch-${x#blackarch-}" &>/dev/null; then install_group "blackarch-${x#blackarch-}"
+    elif [[ $x == blackarch ]]; then full
+    else $SUDO pacman -S --needed --noconfirm "$x"; fi
+  done
+  command -v attackframe-launchers >/dev/null && $SUDO attackframe-launchers
+}
+
+full() {
+  echo "${Y}Installing all of BlackArch: ~2,800 tools, tens of GB, takes hours.${R}"
+  read -rp "Continue? [y/N] " a; [[ $a == [yY] ]] || return 1
+  $SUDO pacman -Sy
+  local g
+  for g in $(pacman -Sg | awk '$1 ~ /^blackarch-/{print $1}' | sort -u); do install_group "$g"; done
+}
+
+menu() {
+  clear; command -v af-banner >/dev/null && af-banner
+  PS3="${M}arsenal${R}> "
+  select _ in "Install BlackArch categories" "Install ALL BlackArch" "Set up Kali container" "Enter Kali shell" "Update everything" "Quit"; do
+    case $REPLY in
+      1) categories; read -rp "categories (space separated): " -a cats; ((${#cats[@]})) && install_items "${cats[@]}" ;;
+      2) full ;;
+      3) attackframe-kali setup ;;
+      4) attackframe-kali enter ;;
+      5) "$0" update ;;
+      *) break ;;
+    esac
+  done
+}
+
+case "${1:-}" in
+  categories|cats) categories ;;
+  show) show "${2:?category}" ;;
+  install) shift; (($#)) || { usage; exit 1; }; install_items "$@" ;;
+  full) full ;;
+  search) pacman -Ss "${2:?term}" ;;
+  kali) shift; exec attackframe-kali "$@" ;;
+  update) $SUDO pacman -Syu; attackframe-kali update 2>/dev/null || true ;;
+  menu) menu ;;
+  *) usage ;;
+esac

@@ -1,0 +1,132 @@
+# AttackFrame OS — GNOME defaults (users can still change everything)
+
+[org/gnome/desktop/interface]
+color-scheme='prefer-dark'
+gtk-theme='adw-gtk3-dark'
+icon-theme='AttackFrame-Neon'
+accent-color='teal'
+monospace-font-name='JetBrainsMono Nerd Font 11'
+document-font-name='JetBrainsMono Nerd Font 11'
+clock-show-seconds=true
+clock-show-weekday=true
+enable-hot-corners=false
+show-battery-percentage=true
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/attackframe/attackframe-grid.png'
+picture-uri-dark='file:///usr/share/backgrounds/attackframe/attackframe-grid.png'
+picture-options='zoom'
+primary-color='#05070d'
+
+[org/gnome/desktop/screensaver]
+picture-uri='file:///usr/share/backgrounds/attackframe/attackframe-grid.png'
+primary-color='#05070d'
+
+[org/gnome/desktop/session]
+idle-delay=uint32 0
+
+[org/gnome/desktop/wm/preferences]
+button-layout='appmenu:minimize,maximize,close'
+titlebar-font='JetBrainsMono Nerd Font Bold 10'
+num-workspaces=4
+
+[org/gnome/mutter]
+center-new-windows=true
+dynamic-workspaces=false
+
+[org/gnome/desktop/peripherals/touchpad]
+tap-to-click=true
+
+[org/gnome/shell]
+enabled-extensions=['user-theme@gnome-shell-extensions.gcampax.github.com', 'appindicatorsupport@rgcjonas.gmail.com', 'attackframe-hud@attackframe']
+favorite-apps=['org.gnome.Terminal.desktop', 'attackframe-arsenal.desktop', 'firefox.desktop', 'af-burpsuite.desktop', 'af-wireshark.desktop', 'af-ghidra.desktop', 'org.gnome.Nautilus.desktop']
+
+[org/gnome/shell/extensions/user-theme]
+name='AttackFrame'
+
+[org/gnome/desktop/app-folders]
+folder-children=['af-recon', 'af-web', 'af-exploit', 'af-crack', 'af-wireless', 'af-sniff', 'af-ad', 'af-reverse', 'af-forensics', 'af-pivot']
+
+[org/gnome/desktop/app-folders/folders/af-recon]
+name='01 // RECON'
+categories=['X-AttackFrame-Recon']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-web]
+name='02 // WEB'
+categories=['X-AttackFrame-Web']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-exploit]
+name='03 // EXPLOIT'
+categories=['X-AttackFrame-Exploit']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-crack]
+name='04 // CRACK'
+categories=['X-AttackFrame-Crack']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-wireless]
+name='05 // WIRELESS'
+categories=['X-AttackFrame-Wireless']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-sniff]
+name='06 // SNIFF+SPOOF'
+categories=['X-AttackFrame-Sniff']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-ad]
+name='07 // ACTIVE DIR'
+categories=['X-AttackFrame-AD']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-reverse]
+name='08 // REVERSE'
+categories=['X-AttackFrame-Reverse']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-forensics]
+name='09 // FORENSICS'
+categories=['X-AttackFrame-Forensics']
+translate=false
+
+[org/gnome/desktop/app-folders/folders/af-pivot]
+name='10 // PIVOT+C2'
+categories=['X-AttackFrame-Pivot']
+translate=false
+
+[org/gnome/terminal/legacy]
+theme-variant='dark'
+default-show-menubar=false
+new-terminal-mode='tab'
+
+[org/gnome/terminal/legacy/profiles:]
+default='af0c0de0-7a7a-4c0d-9e4f-a77ac4f4a3e0'
+list=['af0c0de0-7a7a-4c0d-9e4f-a77ac4f4a3e0']
+
+[org/gnome/terminal/legacy/profiles:/:af0c0de0-7a7a-4c0d-9e4f-a77ac4f4a3e0]
+visible-name='AttackFrame'
+use-system-font=false
+font='JetBrainsMono Nerd Font 11'
+use-theme-colors=false
+background-color='#05070d'
+foreground-color='#c8f7ff'
+bold-color-same-as-fg=false
+bold-color='#00f0ff'
+cursor-colors-set=true
+cursor-background-color='#ff2bd6'
+cursor-foreground-color='#05070d'
+cursor-shape='block'
+cursor-blink-mode='on'
+highlight-colors-set=true
+highlight-background-color='#00f0ff'
+highlight-foreground-color='#05070d'
+palette=['#0b0f1a', '#ff3355', '#39ff88', '#f5ff3b', '#2f7bff', '#ff2bd6', '#00f0ff', '#c8f7ff', '#3a4660', '#ff6680', '#7dffb2', '#faff8a', '#6fa3ff', '#ff70e5', '#7ef8ff', '#ffffff']
+use-transparent-background=true
+background-transparency-percent=8
+scrollbar-policy='never'
+audible-bell=false
+default-size-columns=110
+default-size-rows=30
