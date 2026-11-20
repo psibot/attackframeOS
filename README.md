@@ -49,7 +49,7 @@ The live session auto-logs in as `ghost` (passwordless sudo, live only).
 | `attackframe-arsenal menu` | interactive installer (also the **AttackFrame Arsenal** app) |
 | `attackframe-arsenal install webapp wireless` | add whole BlackArch categories |
 | `attackframe-arsenal full` | everything in BlackArch |
-| `attackframe-kali setup [default|large|everything|top10|tools-<x>]` | build the Kali layer |
+| `attackframe-kali setup ` [default|large|everything|top10|tools] | build the Kali layer |
 | `kali <tool>` / `kali` | run a Kali tool / open a Kali shell |
 | `attackframe-kali export <tool>` | put a Kali binary/app on the host PATH / app grid |
 | `target 10.10.11.5` | set the engagement target (shown in prompt + top-bar HUD, `$TGT`) |
