@@ -98,3 +98,17 @@ The Console gives you access to Kali and BlackArch on the same instance. BlackAr
 ![](console-1.png)  
 
 ![](console-2.png)
+
+![](console-3.png)
+
+![](console-4.png)
+
+![](console-5.png)
+
+![](console-6.png)
+
+
+
+
+
+
