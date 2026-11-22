@@ -1,4 +1,4 @@
-# AttackFrameOS
+# AttackFrameOS - Arch Linux build
 
 A cyberpunk penetration-testing distro: **Arch Linux + the full BlackArch repository** natively, **the full Kali repository** in an integrated container layer, and a neon-HUD **GNOME** desktop inspired by the operator (all artwork is original).
 
